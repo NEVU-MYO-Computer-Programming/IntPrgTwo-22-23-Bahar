@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Antiforgery
+@model string
+
+@{
+    var sayi = 5;
+    sayi += 10;
+}
+
+<h2>İlk view oluşturma işlemimiz hayırlı uğurlu olsun.</h2>
+<p>paragraf örneği</p>
+<a href="https://www.nevsehir.edu.tr">Nevşehir HBV Üni.</a>
+<p> Sayımız : @sayi</p>
+<button>Sayi : <span id="spnSayi"></span></button>
+<br />
+<a href="/empty/oylesine">Oylesine aksiyonu  </a><br />
+@Url.ActionLink("oylesine","empty")
+
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script>
+        var jsSayi = @sayi;
+        $("#spnSayi").text(@sayi);
+
+        $("button").on("click", function () {
+
+            jsSayi++;
+            $("#spnSayi").text(jsSayi);
+        })
+
+    </script>
+}
