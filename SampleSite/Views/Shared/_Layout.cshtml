@@ -27,8 +27,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                           @* <a class="nav-link text-dark" asp-controller="Duty" asp-action="Index">Duty</a>*@
                             <a class="nav-link text-dark" href="@Url.ActionLink("Index","Duty")">Duty</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="@Url.ActionLink("Index","Person")">Person</a>
                         </li>
                     </ul>
                 </div>
