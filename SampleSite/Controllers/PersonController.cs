@@ -14,10 +14,9 @@ namespace SampleSite.Controllers
         private readonly SampleContext _context;
 
 
-
-        public PersonController()
+        public PersonController(IConfiguration config)
         {
-            _context = new SampleContext();
+            _context = new SampleContext(config);
         }
 
         // GET: Person
