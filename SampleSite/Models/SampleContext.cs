@@ -6,13 +6,14 @@ namespace SampleSite.Models;
 
 public partial class SampleContext : DbContext
 {
-
+    public SampleContext()
+    {
+    }
     private readonly IConfiguration _config;
     public SampleContext(IConfiguration config)
     {
         _config = config;
     }
-
     public SampleContext(DbContextOptions<SampleContext> options)
         : base(options)
     {
@@ -22,10 +23,12 @@ public partial class SampleContext : DbContext
 
     public virtual DbSet<PersonWare> PersonWares { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
     public virtual DbSet<Ware> Wares { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlite(_config.GetConnectionString("sample"));
+       => optionsBuilder.UseSqlite(_config.GetConnectionString("sample"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,6 +48,13 @@ public partial class SampleContext : DbContext
             entity.HasOne(d => d.Ware).WithMany(p => p.PersonWares)
                 .HasForeignKey(d => d.WareId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("User");
+
+            entity.HasIndex(e => e.UserName, "IX_User_UserName").IsUnique();
         });
 
         modelBuilder.Entity<Ware>(entity =>
