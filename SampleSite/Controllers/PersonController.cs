@@ -46,17 +46,13 @@ namespace SampleSite.Controllers
         }
 
         // GET: Person/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
 
         // POST: Person/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,LastName,IdentityNo,RecordNo")] Person person)
+        public async Task<IActionResult> Create([FromForm] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -159,5 +155,12 @@ namespace SampleSite.Controllers
         {
             return (_context.People?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+
+        public IActionResult AddWare(int Id) {
+
+            return View();
+        }
+
     }
 }

@@ -1,106 +1,95 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using SampleSite.Models;
 
 namespace SampleSite.Controllers
 {
-    public class UserController : Controller
+    public class WareController : Controller
     {
         private readonly SampleContext _context;
 
-        public UserController(IConfiguration config)
+        public WareController(IConfiguration _c)
         {
-            _context = new SampleContext(config);
+            _context = new SampleContext(_c);
         }
 
-        public IActionResult Kobay()
-        {
-            return View();
-        }
-
-
-
-        // GET: User
+        // GET: Ware
         public async Task<IActionResult> Index()
         {
-            return _context.Users != null ?
-                        View(await _context.Users.ToListAsync()) :
-                        Problem("Entity set 'SampleContext.Users'  is null.");
+              return _context.Wares != null ? 
+                          View(await _context.Wares.ToListAsync()) :
+                          Problem("Entity set 'SampleContext.Wares'  is null.");
         }
 
-        // GET: User/Details/5
+        // GET: Ware/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.Wares == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var ware = await _context.Wares
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (ware == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(ware);
         }
 
-        // GET: User/Create
+        // GET: Ware/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Ware/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Create([Bind("Id,Name,Detail")] Ware ware)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(ware);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(ware);
         }
 
-        // GET: User/Edit/5
+        // GET: Ware/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.Wares == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var ware = await _context.Wares.FindAsync(id);
+            if (ware == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(ware);
         }
 
-        // POST: User/Edit/5
+        // POST: Ware/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,UserName,Password,CreateDate,IsActive")] User user)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Detail")] Ware ware)
         {
-            if (id != user.Id)
+            if (id != ware.Id)
             {
                 return NotFound();
             }
@@ -109,12 +98,12 @@ namespace SampleSite.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(ware);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!WareExists(ware.Id))
                     {
                         return NotFound();
                     }
@@ -125,53 +114,49 @@ namespace SampleSite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(ware);
         }
 
-        // GET: User/Delete/5
+        // GET: Ware/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _context.Wares == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var ware = await _context.Wares
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (ware == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(ware);
         }
 
-        // POST: User/Delete/5
+        // POST: Ware/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            if (_context.Users == null)
+            if (_context.Wares == null)
             {
-                return Problem("Entity set 'SampleContext.Users'  is null.");
+                return Problem("Entity set 'SampleContext.Wares'  is null.");
             }
-            var user = await _context.Users.FindAsync(id);
-            if (user != null)
+            var ware = await _context.Wares.FindAsync(id);
+            if (ware != null)
             {
-                _context.Users.Remove(user);
+                _context.Wares.Remove(ware);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(long id)
+        private bool WareExists(long id)
         {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Wares?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
-
-        
-
     }
 }

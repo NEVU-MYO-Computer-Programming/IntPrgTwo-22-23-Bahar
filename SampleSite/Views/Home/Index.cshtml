@@ -1,8 +1,25 @@
-﻿@{
+﻿@using System.Security.Claims;
+@{
     ViewData["Title"] = "Home Page";
+
+    var username = "";
+    if (User.Identity.IsAuthenticated)
+    {
+        username = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    }
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            Logged in Username : @username
+        </div>
+        <div>
+            @Html.ActionLink("Logout","Logout","Account")
+        </div>
+    }
+
 </div>

@@ -11,5 +11,5 @@ public partial class Ware
 
     public string? Detail { get; set; }
 
-    public virtual ICollection<PersonWare> PersonWares { get; } = new List<PersonWare>();
+    public virtual ICollection<PersonWare> PersonWares { get; set; } = new List<PersonWare>();
 }

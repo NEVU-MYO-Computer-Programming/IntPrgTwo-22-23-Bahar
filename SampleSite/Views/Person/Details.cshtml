@@ -37,6 +37,8 @@
     </dl>
 </div>
 <div>
+    <a asp-action="AddWare" asp-route-id="@Model?.Id">Add Ware</a> |
+    <a href="@Url.ActionLink("AddWare","Person",new {Id=Model?.Id})">Add Ware 2</a> |
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -6,14 +6,13 @@ namespace SampleSite.Models;
 
 public partial class SampleContext : DbContext
 {
+
+
     public SampleContext()
     {
     }
-    private readonly IConfiguration _config;
-    public SampleContext(IConfiguration config)
-    {
-        _config = config;
-    }
+
+
     public SampleContext(DbContextOptions<SampleContext> options)
         : base(options)
     {
@@ -28,7 +27,7 @@ public partial class SampleContext : DbContext
     public virtual DbSet<Ware> Wares { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       => optionsBuilder.UseSqlite(_config.GetConnectionString("sample"));
+        => optionsBuilder.UseSqlite(_configuration.GetConnectionString("sample"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

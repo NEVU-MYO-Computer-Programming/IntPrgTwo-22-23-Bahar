@@ -1,0 +1,55 @@
+﻿
+
+@*Bu bir yorum satırıdır.*@
+
+@{
+
+    int sayi1 = 5;
+    int sayi2 = 10;
+    string metin = "Merhaba";
+
+}
+
+
+@sayi1 
+
+@(sayi1+sayi2)
+
+<p>
+    Hello
+</p>
+
+
+<div>
+    @metin
+</div>
+
+@{
+    if (sayi1+sayi2>10)
+    {
+        <span>Sayıların toplamı 10 'dan büyük</span><br />
+    }
+}
+
+@{
+    <text>
+        merhaba
+    </text>
+
+    @:Salut
+
+}
+
+<script>
+    var jsDegisken=10;
+    @{
+        <text>
+        
+        if (jsDegisken==10)
+        {
+            alert("Deger : 10");
+        
+        }    
+        </text>
+    }
+</script>

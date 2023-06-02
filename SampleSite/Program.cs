@@ -1,9 +1,21 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using SampleSite.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(c =>
+{
+    c.Cookie.Name = "LoginCookie";
+    c.LoginPath = "/Account/Login";
+    c.LogoutPath = "/Account/Logout";
+    c.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    c.SlidingExpiration = true;
+
+});
+
 
 var app = builder.Build();
 
@@ -19,7 +31,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();  // geliþtirilen bu uygulamada routing aktif oldu
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -35,6 +47,8 @@ app.MapGet("/Ders", async context =>
 {
     await context.Response.WriteAsync("Ders route kullanýldý.");
 });
+
+
 
 
 DataContext veriler = new DataContext();
