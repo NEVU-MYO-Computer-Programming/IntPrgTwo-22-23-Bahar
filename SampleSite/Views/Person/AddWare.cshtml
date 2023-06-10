@@ -1,7 +1,78 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "AddWare";
 }
 
 <h1>AddWare</h1>
 
+
+<div>
+    <table id="tblWares" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>DETAIL</th>
+                <th>Seç</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <input type="hidden" id="hdnSelectedWares" />
+</div>
+
+@section Scripts{
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Ware/GetAllWares",
+                type: "GET",
+                success: function (data) {
+                    //console.log(data);
+                    RenderTable(data)
+                }
+            });
+
+
+
+            
+
+
+        })
+
+        function RenderTable(data) {
+
+            console.log(data)
+            var table = $("#tblWares");
+
+            for (var i = 0; i < data.length; i++) {
+
+                var tr = $("<tr>");
+                var tdId = $("<td>");
+                tdId.text(data[i].id);
+                tr.append(tdId);
+                var tdName = $("<td>");
+                tdName.text(data[i].name);
+                tr.append(tdName);
+                var tdDetail = $("<td>");
+                tdDetail.text(data[i].detail);
+                tr.append(tdDetail);
+
+                var tdSecim = $("<td>");
+                tdSecim.html('<input type="checkbox" class="chkWare" data-ware-id="' + data[i].id + '"/>')
+                tr.append(tdSecim);
+
+                console.log(tr);
+                table.children("tbody").append(tr);
+
+            }
+
+        }
+
+    </script>
+
+}

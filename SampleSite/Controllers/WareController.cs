@@ -21,9 +21,9 @@ namespace SampleSite.Controllers
         // GET: Ware
         public async Task<IActionResult> Index()
         {
-              return _context.Wares != null ? 
-                          View(await _context.Wares.ToListAsync()) :
-                          Problem("Entity set 'SampleContext.Wares'  is null.");
+            return _context.Wares != null ?
+                        View(await _context.Wares.ToListAsync()) :
+                        Problem("Entity set 'SampleContext.Wares'  is null.");
         }
 
         // GET: Ware/Details/5
@@ -149,14 +149,25 @@ namespace SampleSite.Controllers
             {
                 _context.Wares.Remove(ware);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool WareExists(long id)
         {
-          return (_context.Wares?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Wares?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+
+
+        public JsonResult GetAllWares()
+        {
+            var allWares = _context.Wares.ToList();
+            return Json(allWares);
+        }
+
+
+
     }
 }

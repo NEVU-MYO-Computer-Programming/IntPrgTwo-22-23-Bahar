@@ -56,7 +56,20 @@ namespace SampleSite.Controllers
         }
 
 
-        public IActionResult Logout() { return View(); }
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                await HttpContext.SignOutAsync();
+            }
+            catch (Exception ex)
+            {
+                TempData["msg"] = ex.Message;
+            }
+
+            return RedirectToAction("Index", "Home");
+
+        }
 
 
         private bool CheckUser(string userName, string password)

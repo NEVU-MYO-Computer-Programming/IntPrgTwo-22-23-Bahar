@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var metin = "deneme";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -37,6 +40,8 @@
                         </li>
                     </ul>
                 </div>
+                @Html.Partial("../Account/_PartialAccount",metin)
+                @*<partial name="../Account/_PartialAccount" model="@metin" />*@
             </div>
         </nav>
     </header>
